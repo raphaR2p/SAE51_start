@@ -1,17 +1,50 @@
 #!/bin/bash
 set +x 
 
-RAM=4096      
-DISK=64000    
+# =========================
+# Variables
+# =========================
+NAME="test3"
+RAM=4096
+DISK=64000      # en Mo
 TYPE_OS="Debian_64"
-DIR="$HOME/VirtualBox VMs/test2"
-NAME=test2
+DIR="$HOME/VirtualBox VMs/$NAME"
+DISK_PATH="$DIR/$NAME.vdi"
 
-vboxmanage createvm --name="$NAME" 2>/dev/null
-if [ $? != 0 ]
-then
-	echo "erreur"
-	exit 1
+# =========================
+# Création de la VM
+# =========================
+echo ">>> Création de la VM $NAME..."
+
+vboxmanage createvm --name "$NAME" --ostype "$TYPE_OS" --register
+if [ $? -ne 0 ]; then
+    echo "Erreur : impossible de créer la VM."
+    exit 1
 fi
 
-vboxmanage registervm "/home/fi25-mambo/VirtualBox VMs/test2/test2.vbox"
+# Configuration mémoire et réseau (NAT + boot PXE)
+vboxmanage modifyvm "$NAME" --memory $RAM --nic1 nat --boot1 net
+
+# Création du disque
+mkdir -p "$DIR"
+vboxmanage createmedium disk --filename "$DISK_PATH" --size $DISK
+
+# Ajout du contrôleur SATA
+vboxmanage storagectl "$NAME" --name "SATA Controller" --add sata --controller IntelAhci
+
+# Attacher le disque
+vboxmanage storageattach "$NAME" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$DISK_PATH"
+
+echo ">>> VM $NAME créée avec succès !"
+
+# =========================
+# Pause pour vérifier la VM
+# =========================
+#read -p "Appuie sur Entrée pour supprimer la VM..."
+
+# =========================
+# Suppression de la VM
+# =========================
+#vboxmanage unregistervm "$NAME" --delete
+#echo ">>> VM $NAME supprimée."
+
