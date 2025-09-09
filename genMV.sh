@@ -16,9 +16,9 @@ DISK_PATH="$DIR/$NAME.vdi"
 # =========================
 echo ">>> Création de la VM $NAME..."
 
-vboxmanage createvm --name "$NAME" --ostype "$TYPE_OS" --register
-if [ $? -ne 0 ]; then
-    echo "Erreur : impossible de créer la VM."
+vboxmanage createvm --name "$NAME" --ostype "$TYPE_OS" --register 2>/dev/null
+if [ $? -ne 0 ]; then 
+    echo "Erreur : impossible de créer la VM $NAME car elle existe déjà."
     exit 1
 fi
 
