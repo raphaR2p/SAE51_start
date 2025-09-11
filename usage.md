@@ -44,15 +44,15 @@ Le script utilise `vboxmanage` pour effectuer toutes les actions sur les VMs. Le
 6. **Supprimer toutes les VMs** :
    - Confirmation obligatoire pour éviter la suppression accidentelle.
 
----
+##Actions disponibles:
+   - L : Lister toutes les VMs existantes.
+   - N : Créer une nouvelle VM (requiert Nom_VM et RAM).
+   - S : Supprimer une VM (requiert Nom_VM).
+   - D : Démarrer une VM (requiert Nom_VM).
+   - A : Arrêter une VM (requiert Nom_VM).
+   - SA : Supprimer toutes les VMs (confirmation requise).
 
-##Actions disponibles
-L : Lister toutes les VMs existantes.
-N : Créer une nouvelle VM (requiert Nom_VM et RAM).
-S : Supprimer une VM (requiert Nom_VM).
-D : Démarrer une VM (requiert Nom_VM).
-A : Arrêter une VM (requiert Nom_VM).
-SA : Supprimer toutes les VMs (confirmation requise).
+---
 
 ## Limites
    - Certains paramètres matériels (taille du disque, CPU, type d'OS) sont codés en dur.
@@ -61,9 +61,11 @@ SA : Supprimer toutes les VMs (confirmation requise).
 
 ## Problèmes rencontrés
    - **Validation des arguments**
-Au début, nous avons oublié de vérifier si l’utilisateur fournissait un nom de VM ou une taille de RAM. Résultat : le script plantait silencieusement quand on lançait ./vm.sh N sans arguments. Nous avons dû ajouter des conditions pour afficher des messages d’erreur clairs et arrêter l’exécution proprement.
+	Au début, nous avons oublié de vérifier si l’utilisateur fournissait un nom de VM ou une taille de RAM. Résultat : le script plantait silencieusement quand on lançait ./vm.sh N sans arguments. Nous avons dû ajouter des conditions pour afficher des messages d’erreur clairs et arrêter l’exécution proprement.
    - **Permissions et chemins d’installation**
-Lors de nos premiers tests, le script essayait de créer des dossiers dans $HOME/VirtualBox VMs, mais sur certaines machines, le répertoire n’existait pas et nous n’avions pas les droits suffisants. Cela a provoqué plusieurs échecs lors de la création des VMs. Nous avons donc intégré la création automatique des dossiers et la vérification des permissions avant chaque opération.
+	Lors de nos premiers tests, le script essayait de créer des dossiers dans $HOME/VirtualBox VMs, mais sur certaines machines, le répertoire n’existait pas et nous n’avions pas les droits suffisants. Cela a provoqué plusieurs échecs lors de la création des VMs. Nous avons donc intégré la création automatique des dossiers et la vérification des permissions avant chaque opération.
+
+---
 
 ## Utilisation
 
