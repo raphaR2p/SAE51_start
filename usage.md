@@ -44,7 +44,7 @@ Le script utilise `vboxmanage` pour effectuer toutes les actions sur les VMs. Le
 6. **Supprimer toutes les VMs** :
    - Confirmation obligatoire pour éviter la suppression accidentelle.
 
-##Actions disponibles:
+## Actions disponibles:
    - L : Lister toutes les VMs existantes.
    - N : Créer une nouvelle VM (requiert Nom_VM et RAM).
    - S : Supprimer une VM (requiert Nom_VM).
